@@ -1,23 +1,28 @@
 import logging
 
+from libBGG.collection import Rating
+
 
 log = logging.getLogger(__name__)
 
 
 class UserException(Exception):
-    '''Exception wrapper for User specific exceptions.'''
-    pass
+    """
+        Exception wrapper for User specific exceptions.
+    """
 
 
 class User(object):
-    '''Store information about a BGG User. The init function takes a list of valid
-    proprties defined by boardgame.__slots__. Properties that are lists can
-    be given as a single item or as a list.'''
+    """
+        Store information about a BGG User. The init function takes a list of
+        valid properties defined by Boardgame.__slots__. Properties that are
+        lists can be given as a single item or as a list.
+    """
 
     # This should really contain the correct types as well...
     __slots__ = [
-        'name', 'hot10', 'top10', 'firstname', 'lastname', 'yearregistered', 'lastlogin',
-        'stateorprovince', 'country', 'traderating', 'bgid'
+        'name', 'hot10', 'top10', 'firstname', 'lastname', 'yearregistered',
+        'lastlogin', 'stateorprovince', 'country', 'traderating', 'bgid'
     ]
 
     def __init__(self, **kwargs):
@@ -32,7 +37,9 @@ class User(object):
                 pass
 
     def __unicode__(self):
-        return '%s (%s) by %s' % (self.name, self._year, ', '.join(self._designers))
+        return '%s (%s) by %s' % (
+            self.name, self._year, ', '.join(self._designers)
+        )
 
     def __str__(self):
         return self.__unicode__().encode('utf-8').strip()
@@ -44,4 +51,5 @@ class User(object):
 
     @property
     def fullname(self):
-        return ' '.join([self.firstname, self.lastname]).encode('utf-8').strip()
+        return ' '.join(
+            [self.firstname, self.lastname]).encode('utf-8').strip()

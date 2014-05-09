@@ -4,14 +4,17 @@ log = logging.getLogger(__name__)
 
 
 class BoardgameException(Exception):
-    '''Exception wrapper for Boardgame specific exceptions.'''
-    pass
+    """
+        Exception wrapper for Boardgame specific exceptions.
+    """
 
 
 class Boardgame(object):
-    '''Store information about a boardgame. The init function takes a list of valid
-    proprties defined by boardgame.valid_properties. Properties that are lists can
-    be given as a single item or as a list.'''
+    """
+        Store information about a boardgame. The init function takes a list of
+        valid properties defined by Boardgame.valid_properties. Properties that
+        are lists can be given as a single item or as a list.
+    """
 
     # This should really contain the correct types as well...
     __slots__ = [
@@ -24,9 +27,12 @@ class Boardgame(object):
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
-       
-        self._list_slots = ['designers', 'artists', 'categories', 'mechanics', 'families',
-                            'publishers', 'names']
+
+        self._list_slots = [
+            'designers', 'artists', 'categories', 'mechanics', 'families',
+            'publishers', 'names'
+        ]
+
         # force these to be lists.
         for l in self._list_slots:
             try:
@@ -45,7 +51,9 @@ class Boardgame(object):
                     log.debug('\t%s: %s' % (a, getattr(self, a)))
 
     def __unicode__(self):
-        return '%s (%s) by %s' % (self.name, self.year, ', '.join(self.designers))
+        return '%s (%s) by %s' % (
+            self.name, self.year, ', '.join(self.designers)
+        )
 
     def __str__(self):
         return self.__unicode__().encode('utf-8').strip()

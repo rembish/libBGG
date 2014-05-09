@@ -1,6 +1,9 @@
+#!/usr/bin/env python
 from distutils.core import setup
 from setuptools import find_packages
+
 from libBGG import __version__
+
 
 setup(
     name='libBGG',
@@ -9,8 +12,9 @@ setup(
     license='FreeBSD License',
     author='Geoff Lawler',
     author_email='geoff.lawler@gmail.com',
-    description='A python interface to the boardgamegeek.com API and boardgame utils.',
-    long_description=open('README.txt', 'r', encoding='utf-8').read(),
+    description='A python interface to the boardgamegeek.com API '
+                'and boardgame utils.',
+    long_description=open('README.txt').read(),
     url='https://github.com/philsstein/libBGG',
     install_requires=[],
     scripts=['bin/bgg_query', 'bin/top_rated']

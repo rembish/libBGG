@@ -1,21 +1,28 @@
 import logging
 
+from libBGG.collection import Rating
+
+
 log = logging.getLogger(__name__)
 
 
 class GuildException(Exception):
-    '''Exception wrapper for Guild specific exceptions.'''
-    pass
+    """
+        Exception wrapper for Guild specific exceptions.
+    """
 
 
 class Guild(object):
-    '''Store information about a BGG Guild. The init function takes a list of valid
-    proprties defined by Guild.valid_properties.'''
+    """
+        Store information about a BGG Guild. The init function takes a list
+        of valid properties defined by Guild.valid_properties.
+    """
 
     # This should really contain the correct types as well...
     # ... and be put in a common base class.
     __slots__ = [
-        'category', 'website', 'manager', 'description', 'members', 'name', 'gid'
+        'category', 'website', 'manager', 'description', 'members',
+        'name', 'gid'
     ]
 
     def __init__(self, **kwargs):

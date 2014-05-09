@@ -13,7 +13,10 @@ class BGGCacheException(Exception):
 
 
 class BGGCache(object):
-    '''Cache and/or retrieve the given XML representations of BGG objects.'''
+    """
+        Cache and/or retrieve the given XML representations of BGG objects.
+    """
+
     def __init__(self, cachedir):
         self.cachedir = cachedir
         self.bgdir = os.path.join(self.cachedir, 'boardgames')
@@ -21,9 +24,12 @@ class BGGCache(object):
         self.userdir = os.path.join(self.cachedir, 'users')
         self.guilddir = os.path.join(self.cachedir, 'guilds')
 
-        self.cache = defaultdict(lambda : defaultdict(str))
+        self.cache = defaultdict(lambda: defaultdict(str))
 
-        for d in [self.cachedir, self.guilddir, self.bgdir, self.collectiondir, self.userdir]:
+        for d in [
+            self.cachedir, self.guilddir, self.bgdir,
+            self.collectiondir, self.userdir
+        ]:
             if not os.path.isdir(d):
                 os.mkdir(d)
 
@@ -38,13 +44,16 @@ class BGGCache(object):
             return self._get_tree(os.path.join(self.bgdir, '%s.xml' % bgid))
 
     def bg_exists(self, bgid):
-        return bgid in self.cache['boardgames'] or os.path.exists(os.path.join(self.bgdir, '%s.xml' % bgid))
+        return bgid in self.cache['boardgames'] \
+            or os.path.exists(os.path.join(self.bgdir, '%s.xml' % bgid))
 
     def cache_guild(self, tree, gid, page=1):
-        self._cache_tree(tree, os.path.join(self.guilddir, '%s-%d.xml' % (gid, page)))
+        self._cache_tree(
+            tree, os.path.join(self.guilddir, '%s-%d.xml' % (gid, page)))
 
     def get_guild(self, gid, page=1):
-        return self._get_tree(os.path.join(self.guilddir, '%s-%d.xml' % (gid, page)))
+        return self._get_tree(
+            os.path.join(self.guilddir, '%s-%d.xml' % (gid, page)))
 
     def guild_exists(self, gid):
         return os.path.exists(os.path.join(self.guilddir, '%s-1.xml' % gid))
@@ -59,13 +68,16 @@ class BGGCache(object):
         return os.path.exists(os.path.join(self.userdir, '%s.xml' % name))
 
     def cache_collection(self, tree, user):
-        self._cache_tree(tree, os.path.join(self.collectiondir, '%s.xml' % user))
+        self._cache_tree(
+            tree, os.path.join(self.collectiondir, '%s.xml' % user))
 
     def get_collection(self, user):
-        return self._get_tree(os.path.join(self.collectiondir, '%s.xml' % user))
+        return self._get_tree(
+            os.path.join(self.collectiondir, '%s.xml' % user))
 
     def collection_exists(self, user):
-        return os.path.exists(os.path.join(self.collectiondir, '%s.xml' % user))
+        return os.path.exists(
+            os.path.join(self.collectiondir, '%s.xml' % user))
 
     def _cache_tree(self, tree, filename):
         tree.write(filename)
@@ -79,4 +91,3 @@ class BGGCache(object):
             log.critical('unable to parse file %s' % path)
             # raise BGGCacheException(e)
             return None
-

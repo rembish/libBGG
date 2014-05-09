@@ -1,16 +1,20 @@
 import logging
 
+
 log = logging.getLogger(__name__)
 
 
 class CollectionException(Exception):
-    '''Exception wrapper for Collection specific exceptions.'''
-    pass
+    """
+        Exception wrapper for Collection specific exceptions.
+    """
 
 
 class Rating(object):
-    __slots__ = ['name', 'bgid', 'userrating', 'usersrated', 'average', 'stddev',
-                 'bayesaverage', 'BGGrank', 'median']
+    __slots__ = [
+        'name', 'bgid', 'userrating', 'usersrated', 'average', 'stddev',
+        'bayesaverage', 'BGGrank', 'median'
+    ]
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -23,8 +27,10 @@ class Rating(object):
 
 
 class BoardgameStatus(object):
-    __slots__ = ['name', 'bgid', 'own', 'prevown', 'fortrade', 'want', 'wanttoplay',
-                 'wanttobuy', 'wishlist', 'wishlistpriority', 'timestamp', 'numplays']
+    __slots__ = [
+        'name', 'bgid', 'own', 'prevown', 'fortrade', 'want', 'wanttoplay',
+        'wanttobuy', 'wishlist', 'wishlistpriority', 'timestamp', 'numplays'
+    ]
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -37,19 +43,19 @@ class BoardgameStatus(object):
                 log.debug('\t%s: %s' % (a, getattr(self, a)))
 
 
-
 class Collection(object):
-    '''
-    Store information about a Collection. The init function takes a list of valid
-    proprties defined by Collection.valid_properties. Properties that are lists can
-    be given as a single item or as a list.
+    """
+        Store information about a Collection. The init function takes a list
+        of valid proprties defined by Collection.valid_properties. Properties
+        that are lists can be given as a single item or as a list.
 
-    The Collection class contains a list of minimally filled out Boardgames as
-    well as a rating map for those games. Each rating contains # users rated, 
-    average, stddev, median, BGG Boardgame rank, etc as well as the User's rating if given.
+        The Collection class contains a list of minimally filled out Boardgames
+        as well as a rating map for those games. Each rating contains # users
+        rated, average, stddev, median, BGG Boardgame rank, etc as well as the
+        User's rating if given.
 
-    Ratings are mapped by boardgame name.
-    '''
+        Ratings are mapped by boardgame name.
+    """
     def __init__(self, user):
         self.user = user
         self.games = list()
@@ -64,7 +70,10 @@ class Collection(object):
 
     def dump(self):
         # note the , at the end of the print statements (no new lines)
-        log.debug('%s\'s collection has %s games:' % (self.user, len(self.games)))
+        log.debug('%s\'s collection has %s games:' % (
+            self.user, len(self.games)
+        ))
+
         for game in self.games:
             name = game.name
             if self.rating[game.bgid].userrating:
